@@ -1,6 +1,7 @@
 package com.codepath.android.booksearch.activities;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -8,11 +9,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codepath.android.booksearch.R;
+import com.codepath.android.booksearch.models.Book;
+
+import org.parceler.Parcels;
 
 public class BookDetailActivity extends AppCompatActivity {
     private ImageView ivBookCover;
     private TextView tvTitle;
     private TextView tvAuthor;
+    Book books;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,9 +29,23 @@ public class BookDetailActivity extends AppCompatActivity {
         tvAuthor = (TextView) findViewById(R.id.tvAuthor);
 
         // Extract book object from intent extras
+        books = (Book) Parcels.unwrap(getIntent().getParcelableExtra(Book.class.getSimpleName()));
+
+
+        // add actionBar
+        ActionBar actionBar = getSupportActionBar(); // or getActionBar();
+        getSupportActionBar().setTitle(tvTitle.getText()); // set the top title
+        String title = actionBar.getTitle().toString(); // get the title
+        actionBar.hide(); // or even hide the actionbar
+
+        tvTitle.setText(books.getTitle());
+        tvAuthor.setText(books.getAuthor());
+
 
         // Use book object to populate data into views
+
     }
+
 
 
     @Override
